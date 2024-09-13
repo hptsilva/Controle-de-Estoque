@@ -1,0 +1,57 @@
+br {
+    user-select: none;
+}
+
+header {
+    background-color: #b19a9a ;
+    padding: 5px;
+}
+
+#logo-img {
+    width: 40px;
+    height: auto;
+}
+
+.nome-usuario {
+    color: Red;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #b19a9a ;
+    padding: 5px;
+}
+
+#navegacao {
+    margin: 5px;
+}
+
+#navegacao a:hover {
+    color: #000000;
+}
+
+.nav-item {
+    margin: 5px !important;
+}
+
+#formulario-entrada textarea{
+    max-width: 400px;
+    resize: none;
+}
+
+th {
+    font-size: 15px;
+}
+
+#enviar-entrada {
+    border-radius: 0px;
+}
+
+.produto-body {
+    border-bottom-style: solid;
+    border-color: Black;
+    border-width: 2px;
+    padding-bottom: 5px;
+}

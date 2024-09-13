@@ -1,0 +1,66 @@
+br {
+    user-select: none;
+}
+
+header {
+    background-color: #b19a9a ;
+    padding: 5px;
+}
+
+#logo-img {
+    width: 40px;
+    height: auto;
+}
+
+.nome-usuario {
+    color: Red;
+}
+
+.btn-danger {
+    margin-left: 5px;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #b19a9a ;
+    padding: 5px;
+}
+
+#form-login{
+    margin: 20px;
+}
+
+#form-login strong {
+    font-size: 30px;
+}
+
+#form-login input {
+    margin  : 5px;
+    max-width: 250px;
+}
+
+.btn-primary {
+    margin: 5px;
+}
+
+#navegacao {
+    margin: 5px;
+}
+
+#navegacao a:hover {
+    color: #000000;
+}
+
+.nav-item {
+    margin: 5px !important;
+}
+
+.card {
+    margin: 10px;
+}
+
+#imagem-card {
+    margin: 5px 5px 5px 0px;
+}
