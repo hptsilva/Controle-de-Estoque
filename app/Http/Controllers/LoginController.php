@@ -9,14 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController
 {
-    public function index(){
+    public function login(){
 
-        
-        return view('index');
+        return view('login');
 
     }
 
-    public function login(Request $request){
+    public function autenticar(Request $request){
 
         //regras de autenticação
         $regras = [
@@ -50,7 +49,9 @@ class LoginController
         if (isset($acesso->name)){
 
             if (Hash::check($password, $acesso->password)){
+                session_start();
                 $_SESSION['username'] = $acesso->name;
+                $_SESSION['autenticado'] = True;
                 return response()->json([
                     'mensagem' => 'Autenticado.',
                 ], 202);

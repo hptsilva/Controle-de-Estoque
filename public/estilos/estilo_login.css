@@ -1,0 +1,84 @@
+body {
+    background-color: #F9F9F9 !important;
+}
+
+br {
+    user-select: none;
+}
+
+main {
+    background-color: #DAD3BE;
+}
+
+.login {
+    display: inline-block;
+    justify-content: center;
+    padding-top: 32vh;
+    min-height: 100vh;
+    align-items: center;
+}
+
+.form {
+    background-color: #925f35;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.form h5 {
+    text-align: left;
+    font-weight: bold;
+}
+
+.form label{
+    font-size: 22px;
+    color: #2A2A2A;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial;
+}
+
+.form input {
+    width: 300px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.form a {
+    color: black;
+    font-family: sans-serif, serif;
+}
+
+.form a:hover {
+    color: #DAD3BE;
+}
+
+.esqueceu-senha {
+    text-align: right;
+}
+
+.criar-conta a {
+    color: #2A2A2A;
+    font-family: sans-serif, serif;
+}
+
+.criar-conta a:hover {
+    color: #FF6F3D;
+}
+
+.btn-entrar {
+    background-color: #7DDA58;
+    border: 0;
+    width: 300px;
+    border-radius: 5px;
+    font-size: 25px;
+    user-select: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial;
+}
+
+.btn-entrar:hover {
+    background-color: #59EB1E;
+}
+
+.btn-entrar:active {
+    background-color: #4AEC0B;
+
+}
