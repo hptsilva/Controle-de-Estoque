@@ -20,7 +20,7 @@
             @include('componentes.options')
             <div class="col">
                 <div id="conteudo">
-                    <h1>Produtos</h1>
+                    <h1>PRODUTOS</h1>
                     <div class="opcoes-produtos">
                         <form id="form-pesquisar">
                         @csrf
@@ -31,7 +31,7 @@
                             <a href="{{route('produtos.adicionar')}}"><img src="{{asset('icons/btn-add.png')}}"></a>
                         </div>
                     </div>
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Nome</th>
@@ -41,10 +41,58 @@
                                 <th scope="col">Custo (R$)</th>
                                 <th scope="col">Venda (R$)</th>
                                 <th scope="col">Quantidade</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                        </tbody>
+                            @foreach ($produtos as $produto)
+                            <tr>
+                              <th scope="row">{{$produto->nome_produto}}</th>
+                              <td>{{$produto->categoria}}</td>
+                              <td>{{$produto->marca}}</td>
+                              <td>{{$produto->unidade}}</td>
+                              <td>{{$produto->preco_custo}}</td>
+                              <td>{{$produto->preco_venda}}</td>
+                              <td>{{$produto->estoque_atual}}</td>
+                              <td>
+                                <form id="form-excluir-{{$produto->id}}" action="">
+                                    @csrf
+                                    <input type="hidden" name="id-produto" value="{{$produto->id}}">
+                                    <button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>
+                                </form>
+                                <script type="text/javascript">
+                                    $(document).ready(function()
+                                    {
+                                        $('#form-excluir-{{$produto->id}}').on('submit', function(event)
+                                        {
+                                            event.preventDefault();
+                                            $('#submit').prop('disabled', true);
+                
+                                            jQuery.ajax(
+                                                {
+                                                url: "{{route('produtos.deletar', ['id' => $produto->id])}}",
+                                                data: jQuery('#form-excluir-{{$produto->id}}').serialize(),
+                                                type: "DELETE",
+                                                success:function(result)
+                                                {
+                                                    alert(result.mensagem)
+                                                    location.reload();
+                                                },
+                                                error:function(xhr, status, error)
+                                                {
+                                                    alert(xhr.responseJSON.mensagem)
+                                                    location.reload();
+                                                    $('#submit').prop('disabled', false);
+                                                }
+                
+                                            })
+                                        })
+                                    })
+                                </script>
+                              </td>
+                            <tr>
+                            @endforeach
+                          </tbody>
                     </table>
                 </div>
             </div>

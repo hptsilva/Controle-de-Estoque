@@ -10,8 +10,15 @@ use App\Http\Middleware\Authentication;
 use App\Http\Middleware\AuthenticationLogin;
 
 Route::get('/', [IndexController::class, 'index'])->name('index')->middleware(Authentication::class);
-Route::get('/produtos', [ProductsController::class, 'mostrarProdutos'])->middleware(Authentication::class)->name('produtos');
-Route::get('/produtos/adicionar', [ProductsController::class, 'adicionarProduto'])->middleware(Authentication::class)->name('produtos.adicionar');
+Route::prefix('produtos')->group( function(){
+    Route::middleware([Authentication::class])->group(function(){
+        Route::get('/', [ProductsController::class, 'mostrarProdutos'])->name('produtos');
+        Route::get('/adicionar/{error?}', [ProductsController::class, 'adicionarProduto'])->name('produtos.adicionar');
+        Route::post('/adicionar', [ProductsController::class, 'processarProdutos'])->name('produtos.adicionar.processar');
+        Route::delete('/deletar/{id}', [ProductsController::class, 'deletarProduto'])->name('produtos.deletar');
+        Route::put('/editar/{id}', [ProductsController::class, 'editarProduto'])->name('produtos.editar');
+    });
+});
 Route::get('/fornecedores', [SuppliersController::class, 'mostrarFornecedores'])->middleware(Authentication::class)->name('fornecedores');
 Route::get('/configuracoes', [SettingsController::class, 'configuracoes'])->middleware(Authentication::class)->name('configuracoes');
 

@@ -50,6 +50,10 @@ section h5 {
     font-family: Verdana, Tahoma, sans-serif;
 }
 
+#conteudo h1 {
+    font-family: 'Franklin Gothic Medium';
+}
+
 .produtos a {
     color: Black;
     font-size: 18px;
@@ -70,19 +74,4 @@ section h5 {
 .fornecedores a:hover {
     text-decoration: underline;
     font-family: Verdana, Tahoma, sans-serif;
-}
-
-#conteudo h1 {
-    font-family: 'Franklin Gothic Medium';
-}
-
-.avisos {
-    background-color: #925f35;
-    color: White;
-    padding: 10px 5px 10px 20px;
-}
-
-.aviso {
-    border-bottom-style: solid;
-    border-color: #DAD3BE;
 }
