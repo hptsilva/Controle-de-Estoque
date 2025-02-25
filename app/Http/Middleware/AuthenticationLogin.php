@@ -22,8 +22,6 @@ class AuthenticationLogin
         }else{
             return $next($request);
         }
-
-        return $next($request);
         
     }
 }

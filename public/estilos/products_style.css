@@ -6,11 +6,26 @@ section {
     display: inline-block;
 }
 
+section h5 {
+    font-family: 'Franklin Gothic Medium';
+}
+
 .opcoes {
     margin-top: 20px;
     border-left-style: solid;
     border-color: #925f35;
     padding: 20px 0px 20px 15px;
+}
+
+.inicio a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.inicio a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
 }
 
 .configuracoes a {
@@ -33,6 +48,10 @@ section {
 .logout a:hover {
     text-decoration: underline;
     font-family: Verdana, Tahoma, sans-serif;
+}
+
+#conteudo h1 {
+    font-family: 'Franklin Gothic Medium';
 }
 
 .produtos a {
@@ -73,4 +92,8 @@ section {
 
 #form-pesquisar input{
     width: 200px;
+}
+
+.table {
+    --bs-table-bg: #925f35 !important
 }
