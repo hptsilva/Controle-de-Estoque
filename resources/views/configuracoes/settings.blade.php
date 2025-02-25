@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shrikhand&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>{{$_SESSION['username']}}</title>
+    <title>Configurações</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <body>
@@ -20,17 +20,7 @@
             @include('componentes.options')
             <div class="col">
                 <div id="conteudo">
-                    <h1>AVISOS:</h1>
-                    <div class="avisos">
-                        <div class="aviso">
-                            <h2>Título do Aviso</h2>
-                            <p>Descrição do aviso</p>
-                        </div>
-                        <div class="aviso">
-                            <h2>Título do Aviso</h2>
-                            <p>Descrição do aviso</p>
-                        </div>
-                    </div>
+                    <h1>Configurações</h1>
                 </div>
             </div>
         </div>

@@ -1,0 +1,77 @@
+body {
+    background-color: #DAD3BE !important;
+}
+
+section {
+    display: inline-block;
+}
+
+section h5 {
+    font-family: 'Franklin Gothic Medium';
+}
+
+.opcoes {
+    margin-top: 20px;
+    border-left-style: solid;
+    border-color: #925f35;
+    padding: 20px 0px 20px 15px;
+}
+
+.configuracoes a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.configuracoes a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.logout a {
+    color: red;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.logout a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.produtos a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.produtos a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.fornecedores a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.fornecedores a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+#conteudo h1 {
+    font-family: 'Franklin Gothic Medium';
+}
+
+.avisos {
+    background-color: #925f35;
+    color: White;
+    padding: 10px 5px 10px 20px;
+}
+
+.aviso {
+    border-bottom-style: solid;
+    border-color: #DAD3BE;
+}

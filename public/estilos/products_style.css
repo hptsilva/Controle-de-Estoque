@@ -1,0 +1,76 @@
+body {
+    background-color: #DAD3BE !important;
+}
+
+section {
+    display: inline-block;
+}
+
+.opcoes {
+    margin-top: 20px;
+    border-left-style: solid;
+    border-color: #925f35;
+    padding: 20px 0px 20px 15px;
+}
+
+.configuracoes a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.configuracoes a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.logout a {
+    color: red;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.logout a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.produtos a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.produtos a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.fornecedores a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.fornecedores a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.btn-adicionar {
+    border-style: none;
+    background-color: #097031;
+    color: White;
+    font-size: 30px;
+}
+.btn-adicionar:hover {
+    background-color: #925f35;
+}
+
+#form-pesquisar {
+    display: inline;
+}
+
+#form-pesquisar input{
+    width: 200px;
+}

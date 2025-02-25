@@ -1,13 +1,9 @@
 body {
-    background-color: #F9F9F9 !important;
+    background-color: #DAD3BE !important;
 }
 
 br {
     user-select: none;
-}
-
-main {
-    background-color: #DAD3BE;
 }
 
 .login {
