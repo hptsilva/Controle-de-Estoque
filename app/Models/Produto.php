@@ -14,7 +14,7 @@ class Produto extends Model
         'nome_produto',
         'categoria',
         'marca',
-        'unidade',
+        'medida',
         'preco_custo',
         'preco_venda',
         'estoque_atual',
@@ -22,7 +22,6 @@ class Produto extends Model
     ];
 
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at',
     ];

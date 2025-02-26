@@ -48,14 +48,12 @@ class ProductsController
                     return response()->json([
                         'produtos' => $produtos,
                     ],200);
-                    break;
 
                 } else {
 
                     return response()->json([
                         'mensagem' => "Produto não encontrado",
                     ], 404);
-                    break;
 
                 }
 
@@ -65,20 +63,17 @@ class ProductsController
                 if (isset($produto)){
 
                     return response()->json([
-                        'produto' => $produto,
+                        'produtos' => $produto,
                     ],200);
-                    break;
                     
                 } else {
 
                     return response()->json([
                         'mensagem' => "Produto não encontrado",
                     ], 404);
-                    break;
 
                 }
 
-                break;
             default:
                 return response()->json([
                     'mensagem' => 'Escolha uma opção de pesquisa válida.'

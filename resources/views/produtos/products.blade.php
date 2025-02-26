@@ -16,8 +16,6 @@
     $(document).ready(function() {
         $("#produtos").css("color", "#925f35");
     });
-
-    
 </script>
 <body>
 @if(isset($_SESSION['autenticado']))
@@ -64,21 +62,46 @@
                                             produtos = result.produtos
                                             var tabela = $('#tabelaProdutos');
                                             tabela.empty()
-                                            var = cabecalho = '<thead><tr><th style="text-align: left" scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Marca</th><th scope="col">Unidade</th><th scope="col">Custo (R$)</th><th scope="col">Venda (R$)</th><th scope="col">Quantidade</th><th scope="col">Ações</th></tr></thead>'
+                                            var cabecalho = '<thead><tr><th style="text-align: left" scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Marca</th><th scope="col">Unidade</th><th scope="col">Custo (R$)</th><th scope="col">Venda (R$)</th><th scope="col">Quantidade</th><th scope="col">Ações</th></tr></thead>'
                                             tabela.append(cabecalho);
-                                            var corpo = '<tbody>';
+                                            tabela.append('<tbody>');
                                             produtos.forEach(produto => {
-                                                <
+                                                corpo = '';
+                                                corpo += '<tr>';
+                                                corpo += '<th scope="row">' + produto.nome_produto +'</th>';
                                                 console.log("Nome do Produto:", produto.nome_produto);
+                                                corpo += '<td>' + produto.categoria + '</td>';
                                                 console.log("Categoria:", produto.categoria);
+                                                corpo += '<td>' + produto.marca + '</td>';
                                                 console.log("Marca:", produto.marca);
+                                                corpo += '<td>' + produto.medida + '</td>';
                                                 console.log("Medida:", produto.medida);
+                                                corpo += '<td>' + produto.preco_custo + '</td>';
                                                 console.log("Preço de Custo:", produto.preco_custo);
+                                                corpo += '<td>' + produto.preco_venda + '</td>';
                                                 console.log("Preço de Venda:", produto.preco_venda);
+                                                corpo += '<td>' + produto.estoque_atual + '</td>';
                                                 console.log("Estoque Atual:", produto.estoque_atual);
                                                 console.log("-----------------------------");
+                                                corpo += '<td>';
+                                                var formulario = $("<form>").attr({
+                                                    "action": ""
+                                                });
+                                                formulario.append($("<input>").attr({
+                                                    "type": "hidden",
+                                                    "name": "id-produto",
+                                                    "value": produto.id
+                                                }));
+                                                formulario.append($("<button>").attr({
+                                                    "type": "submit"
+                                                }).append($("<img>").attr({
+                                                    "src": "{{asset('icons/btn-delete.png')}}"
+                                                })));
+                                                tabela.append(corpo);
+                                                tabela.append(formulario);
+                                                tabela.append('</td></tr>')
                                             });
-                                            corpo += '</tbody>';
+                                            tabela.append('</tbody>');
                                             $('#submit').prop('disabled', false);
                                         },
                                         error:function(xhr, status, error)
@@ -131,7 +154,6 @@
                                         {
                                             event.preventDefault();
                                             $('#submit').prop('disabled', true);
-                
                                             jQuery.ajax(
                                                 {
                                                 url: "{{route('produtos.deletar', ['id' => $produto->id])}}",
@@ -148,7 +170,6 @@
                                                     location.reload();
                                                     $('#submit').prop('disabled', false);
                                                 }
-                
                                             })
                                         })
                                     })
