@@ -16,6 +16,8 @@
     $(document).ready(function() {
         $("#produtos").css("color", "#925f35");
     });
+
+    
 </script>
 <body>
 @if(isset($_SESSION['autenticado']))
@@ -66,6 +68,7 @@
                                             tabela.append(cabecalho);
                                             var corpo = '<tbody>';
                                             produtos.forEach(produto => {
+                                                <
                                                 console.log("Nome do Produto:", produto.nome_produto);
                                                 console.log("Categoria:", produto.categoria);
                                                 console.log("Marca:", produto.marca);
