@@ -2,6 +2,10 @@ body {
     background-color: #DAD3BE !important;
 }
 
+input:focus, select:focus {
+    box-shadow: none !important;
+}
+
 section {
     display: inline-block;
 }

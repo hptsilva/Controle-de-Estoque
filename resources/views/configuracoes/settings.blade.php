@@ -12,6 +12,11 @@
     <title>Configurações</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#configuracoes").css("color", "#925f35");
+    });
+</script>
 <body>
 @if(isset($_SESSION['autenticado']))
 <main>
@@ -20,7 +25,7 @@
             @include('componentes.options')
             <div class="col">
                 <div id="conteudo">
-                    <h1>Configurações</h1>
+                    <h1>CONFIGURAÇÕES</h1>
                 </div>
             </div>
         </div>

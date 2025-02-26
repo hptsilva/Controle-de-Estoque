@@ -90,10 +90,46 @@ section h5 {
     display: inline;
 }
 
-#form-pesquisar input{
-    width: 200px;
+.formulario {
+    display: inline-flex
+
+}
+
+input:focus {
+    box-shadow: none !important;
+}
+
+.formulario input, .formulario button {
+    border-radius: 0px;
+}
+
+.form-check {
+    margin: 5px;
+}
+
+.op-pesquisa {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.input-text {
+    width: 200px !important;
 }
 
 .table {
     --bs-table-bg: #925f35 !important
+}
+
+thead th {
+    color: White !important;
+    text-align: center;
+}
+
+tbody td {
+    text-align: center;
+}
+
+.acoes-produto button {
+    background-color: transparent;
+    border-color: transparent;
 }

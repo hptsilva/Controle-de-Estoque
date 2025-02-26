@@ -23,9 +23,7 @@
                     <input class="form-control" type="text" name="email" id="email">
                     <label class="form-label p-1" for="senha">Senha:</label>
                     <input class="form-control" type="password" name="password" id="senha">
-                    <div class="esqueceu-senha m-2">
-                        <a href="#">Esqueceu a senha</a>
-                    </div>
+                    <br>
                     <button type="submit" id="submit" class="btn-entrar">Entrar</button>
                 </form>
                 <script type="text/javascript">
@@ -62,10 +60,6 @@
                     })
                 </script>
             <div>
-            <div class='criar-conta'>
-                <span>Não tem uma conta?</span>
-                <a href="#">Crie uma conta</a>
-            </div>
         @endif
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -14,10 +14,15 @@ class Produto extends Model
         'nome_produto',
         'categoria',
         'marca',
-        'unidade',
+        'medida',
         'preco_custo',
         'preco_venda',
         'estoque_atual',
         'estoque_minimo',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 }
