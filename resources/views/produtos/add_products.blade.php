@@ -12,6 +12,11 @@
     <title>Adicionar produtos</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#produtos").css("color", "#925f35");
+    });
+</script>
 <body>
 @if(isset($_SESSION['autenticado']))
 <main>
@@ -32,8 +37,8 @@
                                 <label class="form-label" for="categoriaProduto">Categoria: </label>
                                 <select class="form-select" placeholder="Escolha a categoria..." id="categoriaProduto" name="categoria-produto" required>
                                     <option selected disabled value="">Escolha a categoria</option>
-                                    <option value="eletronicos">Eletrônicos</option>
-                                    <option value="vestuarios">Vestuários</option>
+                                    <option value="eletrônicos">Eletrônicos</option>
+                                    <option value="vestuários">Vestuários</option>
                                     <option value="alimentos">Alimentos</option>
                                 </select>
                             </div>
@@ -47,15 +52,15 @@
                                 </datalist>
                             </div>
                             <div class="col-auto text-start">
-                                <label class="form-label" for="unidadeProduto">Unidade: </label>
-                                <select class="form-select" placeholder="Escolha a unidade..." id="unidadeProduto" name="unidade-produto" required>
+                                <label class="form-label" for="medidadeProduto">Unidade: </label>
+                                <select class="form-select" placeholder="Escolha a unidade..." id="medidaProduto" name="medida-produto" required>
                                     <option selected disabled value="">Escolha a unidade de medida</option>
                                     <option value="unitario">Unitário(un)</option>
                                     <option value="grama">Grama(g)</option>
                                     <option value="kilograma">Kilograma(kg)</option>
                                     <option value="tonelada">Tonelada(t)</option>
-                                    <option value="mililitro">Mililitro(ml)</option>
-                                    <option value="litro">Litro(l)</option>
+                                    <option value="mililitros">Mililitro(ml)</option>
+                                    <option value="litros">Litro(l)</option>
                                 </select>
                             </div>
                             <div class="col-auto text-start">

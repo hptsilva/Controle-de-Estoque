@@ -17,6 +17,8 @@ Route::prefix('produtos')->group( function(){
         Route::post('/adicionar', [ProductsController::class, 'processarProdutos'])->name('produtos.adicionar.processar');
         Route::delete('/deletar/{id}', [ProductsController::class, 'deletarProduto'])->name('produtos.deletar');
         Route::put('/editar/{id}', [ProductsController::class, 'editarProduto'])->name('produtos.editar');
+        Route::get('/pesquisar', [ProductsController::class, 'pesquisarProduto'])->name('produtos.pesquisar');
+
     });
 });
 Route::get('/fornecedores', [SuppliersController::class, 'mostrarFornecedores'])->middleware(Authentication::class)->name('fornecedores');

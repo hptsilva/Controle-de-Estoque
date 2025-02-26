@@ -12,6 +12,11 @@
     <title>Produtos</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#produtos").css("color", "#925f35");
+    });
+</script>
 <body>
 @if(isset($_SESSION['autenticado']))
 <main>
@@ -24,17 +29,73 @@
                     <div class="opcoes-produtos">
                         <form id="form-pesquisar">
                         @csrf
-                            <label for="pesquisar-produto"></label>
-                            <input class="form-control" type="text" id="pesquisar-produto" name="pesquisar" placeholder="Pesquisar produto">
+                            <div class='formulario'>
+                                <label for="pesquisar-produto"></label>
+                                <input class="form-control input-text" type="text" id="pesquisar-produto" name="pesquisar-input-text" placeholder="Pesquisar produto" required>
+                                <button class="btn btn-success" type="submit"><img src="{{asset('icons/btn-lupa.png')}}"></button>
+                            </div>
+                            <div class="op-pesquisa">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="op" type="radio" value="op-nome" id="op-nome" required>
+                                    <label class="form-check-label" for="op-nome">Nome<label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="op" type="radio" value="op-id" id="op-id">
+                                    <label class="form-check-label" for="op-id">ID<label>
+                                </div>
+                            </div>
                         </form>
+                        <script type="text/javascript">
+                            $(document).ready(function()
+                            {
+                                $('#form-pesquisar').on('submit', function(event)
+                                {
+                                    event.preventDefault();
+        
+                                    jQuery.ajax(
+                                        {
+                                        url: "{{route('produtos.pesquisar')}}",
+                                        data: jQuery('#form-pesquisar').serialize(),
+                                        type: "GET",
+                                        success:function(result)
+                                        {
+                                            produtos = result.produtos
+                                            var tabela = $('#tabelaProdutos');
+                                            tabela.empty()
+                                            var = cabecalho = '<thead><tr><th style="text-align: left" scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Marca</th><th scope="col">Unidade</th><th scope="col">Custo (R$)</th><th scope="col">Venda (R$)</th><th scope="col">Quantidade</th><th scope="col">Ações</th></tr></thead>'
+                                            tabela.append(cabecalho);
+                                            var corpo = '<tbody>';
+                                            produtos.forEach(produto => {
+                                                console.log("Nome do Produto:", produto.nome_produto);
+                                                console.log("Categoria:", produto.categoria);
+                                                console.log("Marca:", produto.marca);
+                                                console.log("Medida:", produto.medida);
+                                                console.log("Preço de Custo:", produto.preco_custo);
+                                                console.log("Preço de Venda:", produto.preco_venda);
+                                                console.log("Estoque Atual:", produto.estoque_atual);
+                                                console.log("-----------------------------");
+                                            });
+                                            corpo += '</tbody>';
+                                            $('#submit').prop('disabled', false);
+                                        },
+                                        error:function(xhr, status, error)
+                                        {
+                                            alert(xhr.responseJSON.mensagem)
+                                            $('#submit').prop('disabled', false);
+                                        }
+        
+                                    })
+                                })
+                            })
+                        </script>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
                             <a href="{{route('produtos.adicionar')}}"><img src="{{asset('icons/btn-add.png')}}"></a>
                         </div>
                     </div>
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="tabelaProdutos">
                         <thead>
                             <tr>
-                                <th scope="col">Nome</th>
+                                <th style="text-align: left" scope="col">Nome</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Marca</th>
                                 <th scope="col">Unidade</th>
@@ -55,7 +116,7 @@
                               <td>{{$produto->preco_venda}}</td>
                               <td>{{$produto->estoque_atual}}</td>
                               <td>
-                                <form id="form-excluir-{{$produto->id}}" action="">
+                                <form class="acoes-produto" id="form-excluir-{{$produto->id}}" action="">
                                     @csrf
                                     <input type="hidden" name="id-produto" value="{{$produto->id}}">
                                     <button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>

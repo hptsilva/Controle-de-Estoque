@@ -20,4 +20,10 @@ class Produto extends Model
         'estoque_atual',
         'estoque_minimo',
     ];
+
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
 }
