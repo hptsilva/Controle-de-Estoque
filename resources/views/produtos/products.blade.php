@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#produtos").css("color", "#925f35");
+        $("#produtos").css("color", "#FFF1D0");
     });
 </script>
 <body>
@@ -89,6 +89,7 @@
                                                 corpo += '<input type="hidden" name="id-produto" value="' + produto.id + '">';
                                                 corpo += '<button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>';
                                                 corpo += '</form>';
+                                                corpo += '<a href="' + '{{ url("produtos/editar") }}/' + produto.id + '"><img src="{{ asset("icons/btn-edit.png") }}"></a>';
                                                 corpo += '</td>';
                                                 corpo += '</tr>';
                                                 tabela.append(corpo);
@@ -149,6 +150,10 @@
                     <script type="text/javascript">
                         $(document).on('submit', '.form-excluir', function(event) {
                             event.preventDefault();
+
+                            if (!confirm("Deseja excluir o produto?")) {
+                                return
+                            }
                             var form = $(this);
                             var produtoId = form.find('input[name="id-produto"]').val();
                             $('#submit').prop('disabled', true);

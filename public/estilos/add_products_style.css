@@ -1,5 +1,5 @@
 body {
-    background-color: #DAD3BE !important;
+    background-color: #07A0C3 !important;
 }
 
 input:focus {
@@ -22,7 +22,8 @@ section h5 {
 .opcoes {
     margin-top: 20px;
     border-left-style: solid;
-    border-color: #925f35;
+    border-bottom-style: solid;
+    border-color: #086788;
     padding: 20px 0px 20px 15px;
 }
 

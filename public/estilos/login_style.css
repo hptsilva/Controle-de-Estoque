@@ -1,5 +1,5 @@
 body {
-    background-color: #DAD3BE !important;
+    background-color: #07A0C3 !important;
 }
 
 br {
@@ -14,20 +14,20 @@ br {
 }
 
 .form {
-    background-color: #925f35;
+    background-color: #086788;
     padding: 10px;
     margin: 5px;
-    border-radius: 10px;
 }
 
 .form h5 {
     text-align: left;
     font-weight: bold;
+    color: #FFF1D0;
 }
 
 .form label{
     font-size: 22px;
-    color: #2A2A2A;
+    color: #FFF1D0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial;
 }
 
@@ -35,11 +35,6 @@ br {
     width: 300px;
     text-align: center;
     border-radius: 5px;
-}
-
-.form a {
-    color: black;
-    font-family: sans-serif, serif;
 }
 
 .form a:hover {

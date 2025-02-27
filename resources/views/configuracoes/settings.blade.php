@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#configuracoes").css("color", "#925f35");
+        $("#configuracoes").css("color", "#FFF1D0");
     });
 </script>
 <body>
