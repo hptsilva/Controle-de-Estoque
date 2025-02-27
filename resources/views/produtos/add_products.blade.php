@@ -52,7 +52,7 @@
                                 </datalist>
                             </div>
                             <div class="col-auto text-start">
-                                <label class="form-label" for="medidadeProduto">Unidade: </label>
+                                <label class="form-label" for="medidaProduto">Unidade: </label>
                                 <select class="form-select" placeholder="Escolha a unidade..." id="medidaProduto" name="medida-produto" required>
                                     <option selected disabled value="">Escolha a unidade de medida</option>
                                     <option value="unitario">Unitário(un)</option>
@@ -74,7 +74,8 @@
                         </div>
                         <div class="text-start mt-4 mb-5">
                             <strong>*Preencha todo o formulário</strong><br>
-                            <button type="submit" class="btn btn-success">Enviar</button>
+                            <button type="submit" class="btn btn-success">ENVIAR</button>
+                            <a class="btn btn-warning" href="{{route('produtos')}}">VOLTAR</a>
                             <br><br>
                             @php
                                 if(isset($erro)){

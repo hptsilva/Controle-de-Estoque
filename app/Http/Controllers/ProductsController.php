@@ -133,13 +133,18 @@ class ProductsController
 
     public function deletarProduto(Request $request){
 
-        $produtos = new Produto();
-        $produto = $produtos->where('id', '=', $request->route('id'))->get()->first();
+        $produto = Produto::where('id', '=', $request->route('id'))->get()->first();
         if(!isset($produto)){
-            return response()->json(['mensagem' => 'Produto não encontrado'], 404);
+            return response()->json([
+                'mensagem' => 'Produto não encontrado'
+            ], 404);
         }
+        $id_produto = $produto->id;
         $produto->delete();
-        return response()->json(['mensagem' => 'Produto deletado com sucesso'], 200);
+        return response()->json([
+            'mensagem' => 'Produto deletado com sucesso',
+            'id' => $id_produto
+        ], 200);
 
     }
 
