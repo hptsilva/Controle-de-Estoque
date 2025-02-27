@@ -5,6 +5,7 @@ use App\Models\Produto;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 class ProductsController
 {
@@ -84,7 +85,7 @@ class ProductsController
     }
 
 
-    public function adicionarProduto(Request $request){
+    public function adicionarProdutos(Request $request){
 
         $erro = $request->get('erro');
         $sucesso = $request->get('sucesso');
@@ -99,7 +100,7 @@ class ProductsController
 
     }
 
-    public function processarProdutos(Request $request){
+    public function processoAdicionarProdutos(Request $request){
 
         $regras = [
             'nome-produto' => 'required',
@@ -111,12 +112,28 @@ class ProductsController
         ];
 
         $feedback = [
+            'nome-produto.required' => 'Preencha o campo Nome do Produto.',
+            'categoria-produto.required' => 'Escolha a categoria do Produto.',
+            'marca-produto.required' => 'Preencha o campo Marca do Produto.',
+            'medida-produto.required' => 'Escolha a Unidade de Medida.',
+            'preco-custo-produto.required' => 'Preencha o campo Preço de Custo.',
+            'preco-venda-produto.required' => 'Preencha o campo Preço de Venda.',
+            'preco-custo-produto.min' => 'O Preço de Custo deve ser um valor positivo.',
+            'preco-venda-produto.min' => 'O Preço de Venda deve ser um valor positivo.',
         ];
 
-        $request->validate($regras, $feedback);
+        $validator = Validator::make($request->all(), $regras, $feedback);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'mensagem' => $validator->messages(),
+            ], 400);
+        }
+
         $produtos = new Produto();
 
         try {
+
             $produtos->nome_produto = $request->get('nome-produto');
             $produtos->categoria = $request->get('categoria-produto');
             $produtos->marca = $request->get('marca-produto');
@@ -125,9 +142,15 @@ class ProductsController
             $produtos->preco_venda = $request->get('preco-venda-produto');
             $produtos->estoque_atual = 0;
             $produtos->save();
-            return redirect()->route('produtos.adicionar', ['sucesso' => 'Produto adicionado.']);
-        } catch(Exception $erro){
-            return redirect()->route('produtos.adicionar', ['erro' => 'Erro ao processar requisição.']);
+            return response()->json([
+                'mensagem' => 'Produto adicionado.'
+            ], 200);
+
+        } catch(Exception){
+
+            return response()->json([
+                'mensagem' => 'Erro ao processar a requisição.'
+            ], 400);
         }
     }
 
@@ -145,6 +168,82 @@ class ProductsController
             'mensagem' => 'Produto deletado com sucesso',
             'id' => $id_produto
         ], 200);
+
+    }
+
+    public function editarProduto(Request $request){
+
+        $marcas = Produto::select('marca')->get();
+        $produto = Produto::where('id', '=', $request->route('id'))->get()->first();
+        if (isset ($produto)){
+            return view('produtos.edit_products', ['marcas' => $marcas, 'produto' => $produto]);
+        }
+        else {
+            return redirect()->route('produtos');
+        }
+
+    }
+
+    public function processoEditarProduto(Request $request){
+
+        $regras = [
+            'nome-produto' => 'required',
+            'categoria-produto' => 'required',
+            'marca-produto' => 'required',
+            'medida-produto' => 'required',
+            'preco-custo-produto' => 'required|min:0',
+            'preco-venda-produto' => 'required|min:0',
+        ];
+
+        $feedback = [
+            'nome-produto.required' => 'Preencha o campo Nome do Produto.',
+            'categoria-produto.required' => 'Escolha a categoria do Produto.',
+            'marca-produto.required' => 'Preencha o campo Marca do Produto.',
+            'medida-produto.required' => 'Escolha a Unidade de Medida.',
+            'preco-custo-produto.required' => 'Preencha o campo Preço de Custo.',
+            'preco-venda-produto.required' => 'Preencha o campo Preço de Venda.',
+            'preco-custo-produto.min' => 'O Preço de Custo deve ser um valor positivo.',
+            'preco-venda-produto.min' => 'O Preço de Venda deve ser um valor positivo.',
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $feedback);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'mensagem' => $validator->messages(),
+            ], 400);
+        }
+        $produtos = new Produto();
+
+        $produto = Produto::where('id', '=', $request->get('id'))->get()->first();
+        if (isset($produto)){
+
+            try {
+                $produto->nome_produto = $request->get('nome-produto');
+                $produto->categoria = $request->get('categoria-produto');
+                $produto->marca = $request->get('marca-produto');
+                $produto->medida = $request->get('medida-produto');
+                $produto->preco_custo = $request->get('preco-custo-produto');
+                $produto->preco_venda = $request->get('preco-venda-produto');
+                $produto->estoque_atual = 0;
+                $produto->save();
+                return response()->json([
+                    'mensagem' => 'Produto editado.'
+                ], 200);
+            } catch(Exception){
+                return response()->json([
+                    'mensagem' => ['mensagem' => 'Erro ao processar requisição.']
+                ], 400);
+            }
+
+        } else {
+            return response()->json([
+                'mensagem' =>  [
+                    'mensagem' => 'O produto não existe.',
+                    'id' => $request->get('id')
+                ]
+            ], 404);
+        }
 
     }
 

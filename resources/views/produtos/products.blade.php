@@ -140,6 +140,7 @@
                                     <input type="hidden" name="id-produto" value="{{$produto->id}}">
                                     <button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>
                                 </form>
+                                <a href="{{route('produtos.editar', [ 'id' => $produto->id])}}"><img src="{{asset('icons/btn-edit.png')}}"></a>
                             </td>
                             <tr>
                             @endforeach

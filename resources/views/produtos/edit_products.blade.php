@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shrikhand&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Adicionar produtos</title>
+    <title>Editar produtos</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -25,26 +25,26 @@
             @include('componentes.options')
             <div class="col">
                 <div id="conteudo">
-                    <h1>ADICIONAR PRODUTO</h1>
-                    <form class="needs-validation" id="formulario-adicionar-produtos">
+                    <h1>EDITAR PRODUTO</h1>
+                    <form class="needs-validation" id="formulario-editar-produtos">
                         @csrf
+                        <input type="hidden" name="id" value="{{$produto->id}}" required>
                         <div class="row g-3 align-items-center">
                             <div class="col-auto text-start">
                                 <label class="form-label" for="nomeProduto">Nome do Produto: </label>
-                                <input type="text" class="form-control" placeholder="Nome do Produto" id="nomeProduto" name="nome-produto" required>
+                                <input type="text" class="form-control" placeholder="Nome do Produto" id="nomeProduto" name="nome-produto" value="{{$produto->nome_produto}}" required>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="categoriaProduto">Categoria: </label>
                                 <select class="form-select" placeholder="Escolha a categoria..." id="categoriaProduto" name="categoria-produto" required>
-                                    <option selected disabled value="">Escolha a categoria</option>
-                                    <option value="eletrônicos">Eletrônicos</option>
-                                    <option value="vestuários">Vestuários</option>
-                                    <option value="alimentos">Alimentos</option>
+                                    <option value="eletrônicos" {{ $produto->categoria == 'eletrônicos' ? 'selected' : '' }} >Eletrônicos</option>
+                                    <option value="vestuários" {{ $produto->categoria == 'vestuários' ? 'selected' : '' }}>Vestuários</option>
+                                    <option value="alimentos" {{ $produto->categoria == 'alimentos' ? 'selected' : '' }}>Alimentos</option>
                                 </select>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="marcaProduto">Marca</label>
-                                <input class="form-control" list="listaMarcas" id="marcaProduto" placeholder="Marca do produto..." name="marca-produto" required>
+                                <input class="form-control" list="listaMarcas" id="marcaProduto" placeholder="Marca do produto..." name="marca-produto" value="{{$produto->marca}}" required>
                                 <datalist id="listaMarcas">
                                     @foreach ($marcas as $marca)
                                         <option value="{{$marca->marca}}">
@@ -54,64 +54,63 @@
                             <div class="col-auto text-start">
                                 <label class="form-label" for="medidaProduto">Unidade: </label>
                                 <select class="form-select" placeholder="Escolha a unidade..." id="medidaProduto" name="medida-produto" required>
-                                    <option selected disabled value="">Escolha a unidade de medida</option>
-                                    <option value="unitario">Unitário(un)</option>
-                                    <option value="grama">Grama(g)</option>
-                                    <option value="kilograma">Kilograma(kg)</option>
-                                    <option value="tonelada">Tonelada(t)</option>
-                                    <option value="mililitros">Mililitro(ml)</option>
-                                    <option value="litros">Litro(l)</option>
+                                    <option value="unitario" {{ $produto->medida == 'unitario' ? 'selected' : '' }}>Unitário(un)</option>
+                                    <option value="grama" {{ $produto->medida == 'grama' ? 'selected' : '' }}>Grama(g)</option>
+                                    <option value="kilograma" {{ $produto->medida == 'kilograma' ? 'selected' : '' }}>Kilograma(kg)</option>
+                                    <option value="tonelada" {{ $produto->medida == 'tonelada' ? 'selected' : '' }}>Tonelada(t)</option>
+                                    <option value="mililitros" {{ $produto->medida == 'mililitros' ? 'selected' : '' }}>Mililitro(ml)</option>
+                                    <option value="litros" {{ $produto->medida == 'litros' ? 'selected' : '' }}>Litro(l)</option>
                                 </select>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="precoCustoProduto">Preço de custo (R$)</label>
-                                <input type="number" step="0.01" class="form-control" placeholder="Preço de custo" id="precoCustoProduto" name="preco-custo-produto" required>
+                                <input type="number" step="0.01" class="form-control" placeholder="Preço de custo" id="precoCustoProduto" name="preco-custo-produto" value="{{$produto->preco_custo}}" required>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="precoVendaProduto">Preço de Venda (R$)</label>
-                                <input type="number" step="0.01" class="form-control" placeholder="Preço de venda" id="precoVendaProduto" name="preco-venda-produto" required>
+                                <input type="number" step="0.01" class="form-control" placeholder="Preço de venda" id="precoVendaProduto" name="preco-venda-produto" value="{{$produto->preco_venda}}" required>
                             </div>
                         </div>
                         <div class="text-start mt-4 mb-5">
                             <strong>*Preencha todo o formulário</strong><br>
-                            <button type="submit" class="btn btn-success">ENVIAR</button>
+                            <button type="submit" class="btn btn-success">EDITAR</button>
                             <a class="btn btn-warning" href="{{route('produtos')}}">VOLTAR</a>
                             <br><br>
                         </div>
-                        <script type="text/javascript">
-                            $(document).ready(function()
+                    </form>
+                    <script type="text/javascript">
+                        $(document).ready(function()
+                        {
+                            $('#formulario-editar-produtos').on('submit', function(event)
                             {
-                                $('#formulario-adicionar-produtos').on('submit', function(event)
-                                {
-                                    event.preventDefault();
-                                    $('#submit').prop('disabled', true);
+                                event.preventDefault();
+                                $('#submit').prop('disabled', true);
 
-                                    jQuery.ajax(
-                                        {
-                                        url: "{{route('produtos.adicionar.processar')}}",
-                                        data: jQuery('#formulario-adicionar-produtos').serialize(),
-                                        type: "POST",
-                                        success:function(result)
-                                        {
-                                            alert(result.mensagem)
-                                            location.reload()
-                                        },
-                                        error:function(xhr, status, error)
-                                        {
-                                            var mensagens = xhr.responseJSON.mensagem;
-                                            var alerta = '';
-                                            for (const chave in mensagens) {
-                                                alerta = alerta + mensagens[chave] + '\n';
-                                            }
-                                            alert(alerta)
-                                            $('#submit').prop('disabled', false);
+                                jQuery.ajax(
+                                    {
+                                    url: "{{route('produtos.editar.processar', [ 'id', $produto->id])}}",
+                                    data: jQuery('#formulario-editar-produtos').serialize(),
+                                    type: "PUT",
+                                    success:function(result)
+                                    {
+                                        alert(result.mensagem)
+                                        location.reload()
+                                    },
+                                    error:function(xhr, status, error)
+                                    {
+                                        var mensagens = xhr.responseJSON.mensagem;
+                                        var alerta = '';
+                                        for (const chave in mensagens) {
+                                            alerta = alerta + mensagens[chave] + '\n';
                                         }
+                                        alert(alerta)
+                                        $('#submit').prop('disabled', false);
+                                    }
 
-                                    })
                                 })
                             })
-                        </script>
-                    </form>
+                        })
+                    </script>
                 </div>
             </div>
         </div>

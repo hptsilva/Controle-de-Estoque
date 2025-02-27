@@ -13,12 +13,12 @@ Route::get('/', [IndexController::class, 'index'])->name('index')->middleware(Au
 Route::prefix('produtos')->group( function(){
     Route::middleware([Authentication::class])->group(function(){
         Route::get('/', [ProductsController::class, 'mostrarProdutos'])->name('produtos');
-        Route::get('/adicionar/{error?}', [ProductsController::class, 'adicionarProduto'])->name('produtos.adicionar');
-        Route::post('/adicionar', [ProductsController::class, 'processarProdutos'])->name('produtos.adicionar.processar');
+        Route::get('/adicionar/{error?}', [ProductsController::class, 'adicionarProdutos'])->name('produtos.adicionar');
+        Route::post('/adicionar', [ProductsController::class, 'processoAdicionarProdutos'])->name('produtos.adicionar.processar');
         Route::delete('/deletar/{id?}', [ProductsController::class, 'deletarProduto'])->name('produtos.deletar');
-        Route::put('/editar', [ProductsController::class, 'editarProduto'])->name('produtos.editar');
+        Route::get('/editar/{id}', [ProductsController::class, 'editarProduto'])->name('produtos.editar');
+        Route::put('/editar/processo/{id}', [ProductsController::class, 'processoEditarProduto'])->name('produtos.editar.processar');
         Route::get('/pesquisar', [ProductsController::class, 'pesquisarProduto'])->name('produtos.pesquisar');
-
     });
 });
 Route::get('/fornecedores', [SuppliersController::class, 'mostrarFornecedores'])->middleware(Authentication::class)->name('fornecedores');
