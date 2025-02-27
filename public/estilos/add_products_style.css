@@ -2,9 +2,14 @@ body {
     background-color: #DAD3BE !important;
 }
 
-input:focus, select:focus {
+input:focus {
     box-shadow: none !important;
 }
+
+input, button, select, .btn-warning {
+    border-radius: 0px !important;
+}
+
 
 section {
     display: inline-block;

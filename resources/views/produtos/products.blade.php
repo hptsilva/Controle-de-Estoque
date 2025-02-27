@@ -61,13 +61,13 @@
                                         {
                                             produtos = result.produtos
                                             var tabela = $('#tabelaProdutos');
-                                            tabela.empty()
+                                            tabela.empty();
                                             var cabecalho = '<thead><tr><th style="text-align: left" scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Marca</th><th scope="col">Unidade</th><th scope="col">Custo (R$)</th><th scope="col">Venda (R$)</th><th scope="col">Quantidade</th><th scope="col">Ações</th></tr></thead>'
                                             tabela.append(cabecalho);
                                             tabela.append('<tbody>');
                                             produtos.forEach(produto => {
                                                 corpo = '';
-                                                corpo += '<tr>';
+                                                corpo += '<tr id=\'' + produto.id + '\'>';
                                                 corpo += '<th scope="row">' + produto.nome_produto +'</th>';
                                                 console.log("Nome do Produto:", produto.nome_produto);
                                                 corpo += '<td>' + produto.categoria + '</td>';
@@ -84,22 +84,14 @@
                                                 console.log("Estoque Atual:", produto.estoque_atual);
                                                 console.log("-----------------------------");
                                                 corpo += '<td>';
-                                                var formulario = $("<form>").attr({
-                                                    "action": ""
-                                                });
-                                                formulario.append($("<input>").attr({
-                                                    "type": "hidden",
-                                                    "name": "id-produto",
-                                                    "value": produto.id
-                                                }));
-                                                formulario.append($("<button>").attr({
-                                                    "type": "submit"
-                                                }).append($("<img>").attr({
-                                                    "src": "{{asset('icons/btn-delete.png')}}"
-                                                })));
+                                                corpo += '<form class="acoes-produto form-excluir">';
+                                                corpo += '@csrf';
+                                                corpo += '<input type="hidden" name="id-produto" value="' + produto.id + '">';
+                                                corpo += '<button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>';
+                                                corpo += '</form>';
+                                                corpo += '</td>';
+                                                corpo += '</tr>';
                                                 tabela.append(corpo);
-                                                tabela.append(formulario);
-                                                tabela.append('</td></tr>')
                                             });
                                             tabela.append('</tbody>');
                                             $('#submit').prop('disabled', false);
@@ -116,6 +108,7 @@
                         </script>
                         <div style="margin-top: 20px; margin-bottom: 20px;">
                             <a href="{{route('produtos.adicionar')}}"><img src="{{asset('icons/btn-add.png')}}"></a>
+                            <a href="{{route('produtos')}}"><img src="{{asset('icons/btn-refresh.png')}}" width="50"></a>
                         </div>
                     </div>
                     <table class="table table-hover" id="tabelaProdutos">
@@ -133,52 +126,47 @@
                         </thead>
                         <tbody>
                             @foreach ($produtos as $produto)
-                            <tr>
-                              <th scope="row">{{$produto->nome_produto}}</th>
-                              <td>{{$produto->categoria}}</td>
-                              <td>{{$produto->marca}}</td>
-                              <td>{{$produto->unidade}}</td>
-                              <td>{{$produto->preco_custo}}</td>
-                              <td>{{$produto->preco_venda}}</td>
-                              <td>{{$produto->estoque_atual}}</td>
-                              <td>
-                                <form class="acoes-produto" id="form-excluir-{{$produto->id}}" action="">
+                            <tr id="{{$produto->id}}">
+                            <th scope="row">{{$produto->nome_produto}}</th>
+                            <td>{{$produto->categoria}}</td>
+                            <td>{{$produto->marca}}</td>
+                            <td>{{$produto->medida}}</td>
+                            <td>{{$produto->preco_custo}}</td>
+                            <td>{{$produto->preco_venda}}</td>
+                            <td>{{$produto->estoque_atual}}</td>
+                            <td>
+                                <form class="acoes-produto form-excluir">
                                     @csrf
                                     <input type="hidden" name="id-produto" value="{{$produto->id}}">
                                     <button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>
                                 </form>
-                                <script type="text/javascript">
-                                    $(document).ready(function()
-                                    {
-                                        $('#form-excluir-{{$produto->id}}').on('submit', function(event)
-                                        {
-                                            event.preventDefault();
-                                            $('#submit').prop('disabled', true);
-                                            jQuery.ajax(
-                                                {
-                                                url: "{{route('produtos.deletar', ['id' => $produto->id])}}",
-                                                data: jQuery('#form-excluir-{{$produto->id}}').serialize(),
-                                                type: "DELETE",
-                                                success:function(result)
-                                                {
-                                                    alert(result.mensagem)
-                                                    location.reload();
-                                                },
-                                                error:function(xhr, status, error)
-                                                {
-                                                    alert(xhr.responseJSON.mensagem)
-                                                    location.reload();
-                                                    $('#submit').prop('disabled', false);
-                                                }
-                                            })
-                                        })
-                                    })
-                                </script>
-                              </td>
+                            </td>
                             <tr>
                             @endforeach
-                          </tbody>
+                        </tbody>
                     </table>
+                    <script type="text/javascript">
+                        $(document).on('submit', '.form-excluir', function(event) {
+                            event.preventDefault();
+                            var form = $(this);
+                            var produtoId = form.find('input[name="id-produto"]').val();
+                            $('#submit').prop('disabled', true);
+                            jQuery.ajax({
+                                url: "{{route('produtos.deletar', ['id' => ''])}}/" + produtoId,
+                                data: form.serialize(),
+                                type: "DELETE",
+                                success: function(result) {
+                                    alert(result.mensagem);
+                                    console.log(result.id);
+                                    $('#' + result.id).remove();
+                                },
+                                error: function(xhr, status, error) {
+                                    alert(xhr.responseJSON.mensagem);
+                                    $('#submit').prop('disabled', false);
+                                }
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>
