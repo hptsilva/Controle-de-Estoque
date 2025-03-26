@@ -5,15 +5,24 @@ use App\Models\Produto;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Http;
 
 class ProductsController
 {
     public function mostrarProdutos(){
 
-        $produtos = new Produto();
-        $produtos = $produtos->orderByRaw('created_at')->paginate(10);
-        return view('produtos.products', ['produtos' => $produtos]);
+        $url = env('URL_API').'produtos';
+        try {
+            $response = Http::get($url);
+
+            if ($response->successful()) {
+                return view('produtos.products', ['produtos' => $response->json()]);
+            } else {
+                return view('produtos.products', ['produtos' => []]);
+            }
+        } catch (Exception $e) {
+            return view('produtos.products', ['produtos' => []]);
+        }
         
     }
 
@@ -60,19 +69,26 @@ class ProductsController
 
             case  'op-id':
 
-                $produto = Produto::where('id', '=', $request->get('pesquisar-input-text'))->get();
-                if (isset($produto)){
+                $url = env('URL_API')."produtos/".$request->get('pesquisar-input-text');
+                
+                try {
 
+                    $response = Http::get($url);
+
+                    if ($response->successful()) {
+                        $resposta = $response->json();
+                        return response()->json([
+                            'produtos' => [$resposta['produto']],
+                        ],200);
+                    } else {
+                        return response()->json([
+                            'mensagem' => "Produto não encontrado",
+                        ], 404);
+                    }
+                } catch (Exception $e) {
                     return response()->json([
-                        'produtos' => $produto,
-                    ],200);
-                    
-                } else {
-
-                    return response()->json([
-                        'mensagem' => "Produto não encontrado",
-                    ], 404);
-
+                        'mensagem' => "Erro ao processar a requisição.",
+                    ], 500);
                 }
 
             default:

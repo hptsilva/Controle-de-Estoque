@@ -59,29 +59,34 @@
                                         type: "GET",
                                         success:function(result)
                                         {
-                                            produtos = result.produtos
+                                            produtos = result.produtos;
+                                            console.log(produtos);
                                             var tabela = $('#tabelaProdutos');
                                             tabela.empty();
-                                            var cabecalho = '<thead><tr><th style="text-align: left" scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Marca</th><th scope="col">Unidade</th><th scope="col">Custo (R$)</th><th scope="col">Venda (R$)</th><th scope="col">Quantidade</th><th scope="col">Ações</th></tr></thead>'
+                                            var cabecalho = '<thead><tr><th style="text-align: left" scope="col">ID</th><th scope="col">Nome</th><th scope="col">Marca</th><th scope="col">Descrição</th><th scope="col">Unidade</th><th scope="col">Categoria</th><th scope="col">Quantidade</th><th scope="col">Quantidade</th><th scope="col">Preço de Custo</th><th scope="col">Preço de Venda</th></tr></thead>'
                                             tabela.append(cabecalho);
                                             tabela.append('<tbody>');
                                             produtos.forEach(produto => {
                                                 corpo = '';
                                                 corpo += '<tr id=\'' + produto.id + '\'>';
-                                                corpo += '<th scope="row">' + produto.nome_produto +'</th>';
-                                                console.log("Nome do Produto:", produto.nome_produto);
-                                                corpo += '<td>' + produto.categoria + '</td>';
-                                                console.log("Categoria:", produto.categoria);
+                                                corpo += '<th scope="row">' + produto.id +'</th>';
+                                                console.log("ID do Produto:", produto.id);
+                                                corpo += '<th>' + produto.nome +'</th>';
+                                                console.log("Nome do Produto:", produto['nome']);
                                                 corpo += '<td>' + produto.marca + '</td>';
                                                 console.log("Marca:", produto.marca);
-                                                corpo += '<td>' + produto.medida + '</td>';
-                                                console.log("Medida:", produto.medida);
+                                                corpo += '<td>' + produto.descricao + '</td>';
+                                                console.log("Descrição:", produto.descricao);
+                                                corpo += '<td>' + produto.unidade_medida + '</td>';
+                                                console.log("Medida:", produto.unidade_medida);
+                                                corpo += '<td>' + produto.categoria + '</td>';
+                                                console.log("Categoria:", produto.categoria);
+                                                corpo += '<td>' + produto.quantidade + '</td>';
+                                                console.log("Quantidade:", produto.quantidade);
                                                 corpo += '<td>' + produto.preco_custo + '</td>';
                                                 console.log("Preço de Custo:", produto.preco_custo);
                                                 corpo += '<td>' + produto.preco_venda + '</td>';
                                                 console.log("Preço de Venda:", produto.preco_venda);
-                                                corpo += '<td>' + produto.estoque_atual + '</td>';
-                                                console.log("Estoque Atual:", produto.estoque_atual);
                                                 console.log("-----------------------------");
                                                 corpo += '<td>';
                                                 corpo += '<form class="acoes-produto form-excluir">';
@@ -115,33 +120,37 @@
                     <table class="table table-hover" id="tabelaProdutos">
                         <thead>
                             <tr>
-                                <th style="text-align: left" scope="col">Nome</th>
-                                <th scope="col">Categoria</th>
+                                <th style="text-align: left" scope="col">ID</th>
+                                <th scope="col">Nome</th>
                                 <th scope="col">Marca</th>
-                                <th scope="col">Unidade</th>
-                                <th scope="col">Custo (R$)</th>
-                                <th scope="col">Venda (R$)</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Unidade de Medida</th>
+                                <th scope="col">Categoria</th>
                                 <th scope="col">Quantidade</th>
+                                <th scope="col">Preco de Custo</th>
+                                <th scope="col">Preco de Venda</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($produtos as $produto)
-                            <tr id="{{$produto->id}}">
-                            <th scope="row">{{$produto->nome_produto}}</th>
-                            <td>{{$produto->categoria}}</td>
-                            <td>{{$produto->marca}}</td>
-                            <td>{{$produto->medida}}</td>
-                            <td>{{$produto->preco_custo}}</td>
-                            <td>{{$produto->preco_venda}}</td>
-                            <td>{{$produto->estoque_atual}}</td>
+                            <tr id="{{$produto['id']}}">
+                            <th scope="row">{{$produto['id']}}</th>
+                            <th>{{$produto['nome']}}</th>
+                            <td>{{$produto['marca']}}</td>
+                            <td>{{$produto['descricao']}}</td>
+                            <td>{{$produto['unidade_medida']}}</td>
+                            <td>{{$produto['categoria']}}</td>
+                            <td>{{$produto['quantidade']}}</td>
+                            <td>{{$produto['preco_custo']}}</td>
+                            <td>{{$produto['preco_venda']}}</td>
                             <td>
                                 <form class="acoes-produto form-excluir">
                                     @csrf
-                                    <input type="hidden" name="id-produto" value="{{$produto->id}}">
+                                    <input type="hidden" name="id-produto" value="{{$produto['id']}}">
                                     <button type="submit"><img src="{{asset('icons/btn-delete.png')}}"></button>
                                 </form>
-                                <a href="{{route('produtos.editar', [ 'id' => $produto->id])}}"><img src="{{asset('icons/btn-edit.png')}}"></a>
+                                <a href="{{route('produtos.editar', [ 'id' => $produto['id']])}}"><img src="{{asset('icons/btn-edit.png')}}"></a>
                             </td>
                             <tr>
                             @endforeach
@@ -158,7 +167,7 @@
                             var produtoId = form.find('input[name="id-produto"]').val();
                             $('#submit').prop('disabled', true);
                             jQuery.ajax({
-                                url: "{{route('produtos.deletar', ['id' => ''])}}/" + produtoId,
+                                url: "{{env('URL_API')}}" + produtoId,
                                 data: form.serialize(),
                                 type: "DELETE",
                                 success: function(result) {

@@ -1,7 +1,14 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"name": "ISAC-source",
+			"path": "../ISAC-source"
+		},
+		{
+			"path": "../API-Controle-de-Estoque"
+		},
+		{
+			"path": "../Black-Wolves"
 		}
 	]
 }

@@ -1,0 +1,141 @@
+body {
+    background-color: #07A0C3 !important;
+}
+
+section {
+    display: inline-block;
+}
+
+section h5 {
+    font-family: 'Franklin Gothic Medium';
+}
+
+.opcoes {
+    margin-top: 20px;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: #086788;
+    padding: 20px 0px 20px 15px;
+}
+
+.inicio a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.inicio a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.produtos a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.produtos a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.configuracoes a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.configuracoes a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.logout a {
+    color: red;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.logout a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+#conteudo h1 {
+    font-family: 'Franklin Gothic Medium';
+}
+
+.fornecedores a {
+    color: Black;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+.fornecedores a:hover {
+    text-decoration: underline;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.btn-adicionar {
+    border-style: none;
+    background-color: #097031;
+    color: White;
+    font-size: 30px;
+}
+
+#form-pesquisar {
+    display: inline;
+}
+
+.formulario {
+    display: inline-flex
+
+}
+
+input:focus {
+    box-shadow: none !important;
+}
+
+.formulario input, .formulario button {
+    border-radius: 0px;
+}
+
+.form-check {
+    margin: 5px;
+}
+
+.op-pesquisa {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.input-text {
+    width: 200px !important;
+}
+
+.table {
+    --bs-table-bg: #086788 !important
+}
+
+thead th {
+    color: #FFF1D0 !important;
+    text-align: center;
+}
+
+tbody td {
+    text-align: center;
+}
+
+tbody th {
+    color: #FFF1D0 !important;
+}
+
+tbody td {
+    color: White !important;
+}
+
+.acoes-fornecedor button {
+    background-color: transparent;
+    border-color: transparent;
+}

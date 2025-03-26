@@ -21,7 +21,18 @@ Route::prefix('produtos')->group( function(){
         Route::get('/pesquisar', [ProductsController::class, 'pesquisarProduto'])->name('produtos.pesquisar');
     });
 });
-Route::get('/fornecedores', [SuppliersController::class, 'mostrarFornecedores'])->middleware(Authentication::class)->name('fornecedores');
+
+Route::prefix('fornecedores')->group( function(){
+    Route::middleware([Authentication::class])->group(function(){
+        Route::get('/', [SuppliersController::class, 'mostrarFornecedor'])->name('fornecedores');
+        Route::get('/adicionar/{error?}', [SuppliersController::class, 'adicionarFornecedor'])->name('fornecedores.adicionar');
+        Route::post('/adicionar', [SuppliersController::class, 'processoAdicionarFornecedor'])->name('fornecedores.adicionar.processar');
+        Route::delete('/deletar/{id?}', [SuppliersController::class, 'deletarFornecedor'])->name('fornecedores.deletar');
+        Route::get('/editar/{id}', [SuppliersController::class, 'editarFornecedor'])->name('fornecedores.editar');
+        Route::put('/editar/processo/{id}', [SuppliersController::class, 'processoEditarFornecedor'])->name('fornecedores.editar.processar');
+        Route::get('/pesquisar', [SuppliersController::class, 'pesquisarFornecedor'])->name('fornecedores.pesquisar');
+    });
+});
 Route::get('/configuracoes', [SettingsController::class, 'configuracoes'])->middleware(Authentication::class)->name('configuracoes');
 
 Route::get('/login', [LoginController::class, 'login'])->name('login')->middleware(AuthenticationLogin::class);
