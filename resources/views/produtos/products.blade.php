@@ -71,7 +71,7 @@
                                                 corpo += '<tr id=\'' + produto.id + '\'>';
                                                 corpo += '<th scope="row">' + produto.id +'</th>';
                                                 console.log("ID do Produto:", produto.id);
-                                                corpo += '<th>' + produto.nome +'</th>';
+                                                corpo += '<td>' + produto.nome +'</td>';
                                                 console.log("Nome do Produto:", produto['nome']);
                                                 corpo += '<td>' + produto.marca + '</td>';
                                                 console.log("Marca:", produto.marca);
@@ -136,7 +136,7 @@
                             @foreach ($produtos as $produto)
                             <tr id="{{$produto['id']}}">
                             <th scope="row">{{$produto['id']}}</th>
-                            <th>{{$produto['nome']}}</th>
+                            <td>{{$produto['nome']}}</td>
                             <td>{{$produto['marca']}}</td>
                             <td>{{$produto['descricao']}}</td>
                             <td>{{$produto['unidade_medida']}}</td>
@@ -167,13 +167,13 @@
                             var produtoId = form.find('input[name="id-produto"]').val();
                             $('#submit').prop('disabled', true);
                             jQuery.ajax({
-                                url: "{{env('URL_API')}}" + produtoId,
+                                url: "{{env('URL_API')}}produtos/" + produtoId,
                                 data: form.serialize(),
                                 type: "DELETE",
                                 success: function(result) {
                                     alert(result.mensagem);
-                                    console.log(result.id);
-                                    $('#' + result.id).remove();
+                                    console.log('Produto Excluído.');
+                                    $('#' + produtoId).remove();
                                 },
                                 error: function(xhr, status, error) {
                                     alert(xhr.responseJSON.mensagem);

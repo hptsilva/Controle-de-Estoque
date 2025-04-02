@@ -34,33 +34,34 @@
                                 <input type="text" class="form-control" placeholder="Nome do Produto" id="nomeProduto" name="nome-produto" required>
                             </div>
                             <div class="col-auto text-start">
+                                <label class="form-label" for="precoCustoProduto">Descrição</label>
+                                <input type="text" class="form-control" placeholder="Descrição do Produto" id="descricaoProduto" name="descricao-produto">
+                            </div>
+                            <div class="col-auto text-start">
                                 <label class="form-label" for="categoriaProduto">Categoria: </label>
                                 <select class="form-select" placeholder="Escolha a categoria..." id="categoriaProduto" name="categoria-produto" required>
                                     <option selected disabled value="">Escolha a categoria</option>
-                                    <option value="eletrônicos">Eletrônicos</option>
-                                    <option value="vestuários">Vestuários</option>
-                                    <option value="alimentos">Alimentos</option>
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{$categoria['id']}}">{{$categoria['nome']}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="marcaProduto">Marca</label>
-                                <input class="form-control" list="listaMarcas" id="marcaProduto" placeholder="Marca do produto..." name="marca-produto" required>
-                                <datalist id="listaMarcas">
+                                <select class="form-control" list="listaMarcas" id="marcaProduto" placeholder="Marca do produto..." name="marca-produto" required>
+                                    <option selected disabled value="">Escolha a marca</option>
                                     @foreach ($marcas as $marca)
-                                        <option value="{{$marca->marca}}">
+                                        <option value="{{$marca['id']}}">{{$marca['nome']}}</option>
                                     @endforeach
-                                </datalist>
+                                </select>
                             </div>
                             <div class="col-auto text-start">
                                 <label class="form-label" for="medidaProduto">Unidade: </label>
                                 <select class="form-select" placeholder="Escolha a unidade..." id="medidaProduto" name="medida-produto" required>
                                     <option selected disabled value="">Escolha a unidade de medida</option>
-                                    <option value="unitario">Unitário(un)</option>
-                                    <option value="grama">Grama(g)</option>
-                                    <option value="kilograma">Kilograma(kg)</option>
-                                    <option value="tonelada">Tonelada(t)</option>
-                                    <option value="mililitros">Mililitro(ml)</option>
-                                    <option value="litros">Litro(l)</option>
+                                    @foreach ($unidades as $unidade )
+                                        <option value="{{$unidade['id']}}">{{$unidade['nome']}} ({{$unidade['sigla']}})</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-auto text-start">
