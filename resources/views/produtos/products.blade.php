@@ -167,7 +167,7 @@
                             var produtoId = form.find('input[name="id-produto"]').val();
                             $('#submit').prop('disabled', true);
                             jQuery.ajax({
-                                url: "{{env('URL_API')}}produtos/" + produtoId,
+                                url: "{{route('produtos.deletar')}}/" + produtoId,
                                 data: form.serialize(),
                                 type: "DELETE",
                                 success: function(result) {

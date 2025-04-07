@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Models\Produto;
+use App\Models\TokensApi;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 
 class ProductsController
@@ -47,12 +49,28 @@ class ProductsController
         $url_unidades = env('URL_API').'unidades';
         $url_categorias = env('URL_API').'categorias';
         $url_marcas = env('URL_API').'marcas';
+
+        $token = new TokensApi();
+        $token = $token->where('id_user', '=', $_SESSION['id'])->get()->first();
+        $token = Crypt::decrypt($token->token);
+
         try {
 
-            $resposta_produtos = Http::get($url_produtos);
-            $resposta_unidades = Http::get($url_unidades);
-            $resposta_categorias = Http::get($url_categorias);
-            $respostas_marcas = Http::get($url_marcas);
+            $resposta_produtos = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_produtos);
+            
+            $resposta_unidades = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_unidades);
+            
+            $resposta_categorias = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_categorias);
+            
+            $respostas_marcas = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_marcas);
 
             if ($resposta_produtos->successful() && $resposta_unidades->successful() && $resposta_categorias->successful()) {
 
@@ -70,15 +88,18 @@ class ProductsController
 
                 return view('produtos.products', ['produtos' => $produtos]);
             } else {
-                return view('produtos.products', ['produtos' => []]);
+                session_abort();
+                session_destroy();
+                return redirect()->route('index');
             }
         } catch (Exception $e) {
             return view('produtos.products', ['produtos' => []]);
         }
-        
+
     }
 
-    public function pesquisarProduto(Request $request){
+    public function pesquisarProduto(Request $request)
+    {
 
         $regras = [
             'pesquisar-input-text' => 'required',
@@ -161,11 +182,22 @@ class ProductsController
         $url_marcas = env('URL_API').'marcas';
         $url_categorias = env('URL_API').'categorias';
         $url_unidades = env('URL_API').'unidades';
+        $token = new TokensApi();
+        $token = $token->where('id_user', '=', $_SESSION['id'])->get()->first();
+        $token = Crypt::decrypt($token->token);
 
         try{
-            $resposta_marcas = Http::get($url_marcas);
-            $resposta_categorias = Http::get($url_categorias);
-            $resposta_unidades = Http::get($url_unidades);
+            $resposta_unidades = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_unidades);
+            
+            $resposta_categorias = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_categorias);
+            
+            $resposta_marcas = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->get($url_marcas);
 
             $unidades = $resposta_unidades->json();
             $categorias = $resposta_categorias->json();
@@ -182,7 +214,9 @@ class ProductsController
                 return view('produtos.add_products', ['sucesso' => $sucesso, 'marcas' => $marcas, 'unidades' => $unidades, 'categorias' => $categorias]);
 
             } else {
-                return view('produtos.products', ['produtos' => []]);
+                session_abort();
+                session_destroy();
+                return redirect()->route('index');
             }
         } catch (Exception){
             return response()->json([
@@ -192,7 +226,8 @@ class ProductsController
 
     }
 
-    public function processoAdicionarProdutos(Request $request){
+    public function processoAdicionarProdutos(Request $request)
+    {
 
         $regras = [
             'nome-produto' => 'required',
@@ -239,7 +274,13 @@ class ProductsController
                 'quantidade' => 0
             ];
 
-            $resposta = Http::post($url_produtos, $data);
+            $token = new TokensApi();
+            $token = $token->where('id_user', '=', $_SESSION['id'])->get()->first();
+            $token = Crypt::decrypt($token->token);
+
+            $resposta = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->post($url_produtos, $data);
 
             return response()->json([
                 'mensagem' => isset($resposta['mensagem']) ? $resposta['mensagem'] : "Produto adicionado"
@@ -253,12 +294,20 @@ class ProductsController
         }
     }
 
-    public function deletarProduto(Request $request){
+    public function deletarProduto(Request $request)
+    {
 
-        $url_produtos = env('URL_API').'produtos';
+        $url_produtos = env('URL_API').'produtos/';
 
         try {
-            $resposta = Http::delete($url_produtos, $request->route('id'));
+
+            $token = new TokensApi();
+            $token = $token->where('id_user', '=', $_SESSION['id'])->get()->first();
+            $token = Crypt::decrypt($token->token);
+
+            $resposta = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token
+            ])->delete($url_produtos.$request->route('id'));
 
             return response()->json([
                 'mensagem' => $resposta['mensagem'],
@@ -266,13 +315,14 @@ class ProductsController
 
         } catch(Exception){
             return response()->json([
-                'mensagem' => 'Erro ao processar a requisição',
+                'mensagem' => 'Erro ao processar a requisição.',
             ], 500);
         }
 
     }
 
-    public function editarProduto(Request $request){
+    public function editarProduto(Request $request)
+    {
 
         $produto = Produto::where('id', '=', $request->route('id'))->get()->first();
         if (isset ($produto)){

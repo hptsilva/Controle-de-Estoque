@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
+use App\Models\TokensApi;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SettingsController;
@@ -38,8 +41,18 @@ Route::get('/configuracoes', [SettingsController::class, 'configuracoes'])->midd
 Route::get('/login', [LoginController::class, 'login'])->name('login')->middleware(AuthenticationLogin::class);
 Route::post('/autenticar', [LoginController::class, 'autenticar'])->name('autenticar');
 Route::get('/logout', function(){
+
     session_start();
     session_destroy();
     session_abort();
+
+    $token = new TokensApi();
+    $token = $token->where('id_user', '=', $_SESSION['id'])->get()->first();
+    $token = Crypt::decrypt($token->token);
+
+    Http::withHeaders([
+        'Authorization' => 'Bearer ' . $token
+    ])->post(env('URL_API').'logout');
+
     return redirect()->route('login');
 })->name('logout');

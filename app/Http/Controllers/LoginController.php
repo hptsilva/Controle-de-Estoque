@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TokensApi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController
 {
@@ -15,7 +18,8 @@ class LoginController
 
     }
 
-    public function autenticar(Request $request){
+    public function autenticar(Request $request)
+    {
 
         //regras de autenticação
         $regras = [
@@ -51,18 +55,59 @@ class LoginController
             if (Hash::check($password, $acesso->password)){
                 session_start();
                 $_SESSION['username'] = $acesso->name;
+                $_SESSION['id'] = $acesso->id;
                 $_SESSION['autenticado'] = True;
-                return response()->json([
-                    'mensagem' => 'Autenticado.',
-                ], 202);
+
+                $url_login = env('URL_API').'login';
+
+                $data = [
+                    'email' => $email,
+                    'password' => $password
+                ];
+
+                $resposta = Http::post($url_login, $data);
+
+                if ($resposta->successful()){
+
+                    $token = $resposta['access_token'];
+
+                    $token_api = new TokensApi();
+
+                    $resultado = $token_api->where('id_user', '=', $acesso->id)->get()->first();
+
+                    if (isset($resultado)){
+
+                        $resultado->token = Crypt::encrypt($token);
+                        $resultado->save();
+                        return response()->json([
+                            'mensagem' => 'Autenticado.',
+                        ], 202);
+
+                    }
+
+                    $token_api->token = $token;
+                    $token_api->id_user = $acesso->id;
+                    $token_api->save();
+
+                    return response()->json([
+                        'mensagem' => 'Autenticado.',
+                    ], 202);
+                } else {
+                    session_destroy();
+                    session_abort();
+                    return response()->json([
+                        'mensagem' => ['mensagem' => 'Erro ao se autenticar.']
+                    ], 500);
+                }
+
             } else {
                 return response()->json([
-                    'mensagem' => ['mensagem' => 'E-mail e/ou senha inválidos'],
+                    'mensagem' => ['mensagem' => 'E-mail e/ou senha inválidos.'],
                 ], 500);
             }
         } else{
             return response()->json([
-                'mensagem' => ['mensagem' => 'E-mail e/ou senha inválidos'],
+                'mensagem' => ['mensagem' => 'E-mail e/ou senha inválidos.'],
             ], 404);
         }
 
